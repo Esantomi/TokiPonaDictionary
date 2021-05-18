@@ -1,2 +1,3 @@
-# projects
-Every projects in which I've participated.
+# toki pona dictionary
+
+making toki pona dictionary program
