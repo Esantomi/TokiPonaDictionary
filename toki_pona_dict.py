@@ -1,4 +1,4 @@
-# 단어 csv 파일 가져오기
+# 긁어 온 파일 '단어', '뜻' 순서로 리스트에 넣기
 f = open('words.csv', 'rt', encoding = 'utf-8')
 
 nimi = []
@@ -18,7 +18,13 @@ for i, j in zip(nimi, pilin):
 
 # print(lipu_pona)
 
+
+# csv 형식에 맞는 파일 생성
+import csv
+
 with open('words_ordered.csv', 'w') as new_f:
+    writer = csv.DictWriter(new_f, fieldnames = ["단어", "뜻"])
+    writer.writeheader()
     for line in lipu_pona:
         # print(line)
         if ',' in line:
@@ -34,6 +40,43 @@ with open('words_ordered.csv', 'w') as new_f:
                 new_f.write(line + '\n')
 
 f.close()
+
+
+# 입력받아 뜻 찾아주기
+import csv
+
+with open('words_ordered.csv') as csv_dict:
+    reader = csv.DictReader(csv_dict)
+    lukin = input("단어를 입력하세요 : ")
+    for row in reader:
+        # print(row)
+        if lukin == row.get('단어'):
+            print(row.get('뜻'))
+        else:
+            continue
+
+
+# PyQt5
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget
+
+class MyApp(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle('한국어-도기 보나 사전')
+        self.move(300, 300)
+        self.resize(400, 200)
+        self.show()
+
+if __name__ == '__main__':
+   app = QApplication(sys.argv)
+   ex = MyApp()
+   sys.exit(app.exec_())
+
 
 # 전체 단어 목록
 # lipu_nimi = {'a':'감탄사 전반',\
