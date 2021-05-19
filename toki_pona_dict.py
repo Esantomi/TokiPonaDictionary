@@ -1,59 +1,41 @@
-# 입력받아 뜻 찾아주기
-import csv
-
-def searchDict(lukin):
-    with open('words_ordered.csv') as csv_dict:
-        reader = csv.DictReader(csv_dict)
-        # lukin = input("단어를 입력하세요 : ")
-        for row in reader:
-            # print(row)
-            if lukin == row.get('단어'):
-                return print(row.get('뜻'))
-            else:
-                continue
-
-# searchDict('mun')
-
-
 # PyQt5
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QDesktopWidget
+import csv
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
+from PyQt5 import uic
 
-class TokiPonaDictApp(QWidget):
+# UI파일 연결
+form_class = uic.loadUiType("ui.ui")[0]
 
-    # 생성자 설정
-    def __init__(self):
+#화면을 띄우는데 사용되는 Class 선언
+class TokiPonaDictionary(QMainWindow, form_class) :
+    def __init__(self) :
         super().__init__()
-        self.initUI()
-
-    # UI 초기 설정
-    def initUI(self):
-        self.lbl = QLabel(self)
-        self.lbl.move(60, 40)
-
-        qle = QLineEdit(self)
-        qle.move(60, 100)
-        qle.textChanged[str].connect(self.onChanged)
-
-        self.setWindowTitle('한국어-도기 보나 사전')
+        self.setupUi(self)
+        self.setWindowTitle('lipu nimi pi toki Anku')
         self.setWindowIcon(QIcon('icon.png'))
-        self.setGeometry(300, 300, 300, 200)
-        self.center()
-        self.show()
-    
-    # 가운데 정렬
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
 
-    def onChanged(self, text):
-        self.lbl.setText(searchDict(text))
-        self.lbl.adjustSize()
+        #버튼에 기능을 연결하는 코드
+        self.pushButton.clicked.connect(self.searchButtonFunction)
 
-if __name__ == '__main__':
+    # 검색 버튼 클릭 시 발생 이벤트
+    def searchButtonFunction(self) :
+        with open('words_ordered.csv') as csv_dict:
+            reader = csv.DictReader(csv_dict)
+            # lukin = input("단어를 입력하세요 : ")
+            for row in reader:
+                # print(row)
+                if self.lineEdit.text() == row.get('단어'):
+                    toki_anku = row.get('뜻')
+                # elif self.lineEdit.text() not in row.get('단어'):
+                #     toki_anku = "단어를 정확히 입력해 주세요."
+                else:
+                    continue
+        self.lineEdit.setText(toki_anku)
+
+if __name__ == "__main__" :
     app = QApplication(sys.argv)
-    ex = TokiPonaDictApp()
-    sys.exit(app.exec_())
+    tp_program = TokiPonaDictionary() 
+    tp_program.show()
+    app.exec_()
