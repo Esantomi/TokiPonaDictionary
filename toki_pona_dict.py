@@ -1,23 +1,41 @@
 # 단어 csv 파일 가져오기
-import csv
-
-f = open('words.csv', 'r')
-f_r = csv.reader(f)
+f = open('words.csv', 'rt', encoding = 'utf-8')
 
 nimi = []
 pilin = []
 
-for line in f_r:
-    if line[0][0] in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']:
-        nimi.append(line)
+for line in f:
+    # print(line)
+    if line[0] in 'aeioumnptkswlj':
+        nimi.append(line.strip())
     else:
-        pilin.append(line)
+        pilin.append(line.strip())
 
-for pair in zip(nimi, pilin):
-    dict(zip(nimi, pilin))
+lipu_pona = []
+for i, j in zip(nimi, pilin):
+    lipu_pona.append(i)
+    lipu_pona.append(j)
 
+# print(lipu_pona)
 
-# # 전체 단어 목록
+with open('words_ordered.csv', 'w') as new_f:
+    for line in lipu_pona:
+        # print(line)
+        if ',' in line:
+            line.replace(',', '/')
+            if line[0] in 'aeioumnptkswlj':
+                new_f.write(line + ',')
+            else:
+                new_f.write(line + '\n')
+        else:
+            if line[0] in 'aeioumnptkswlj':
+                new_f.write(line + ',')
+            else:
+                new_f.write(line + '\n')
+
+f.close()
+
+# 전체 단어 목록
 # lipu_nimi = {'a':'감탄사 전반',\
 #     'akesi':'파충류, 양서류, 징그러운 동물',\
 #     'ala':'부정어, 아니, 영(0)',\
