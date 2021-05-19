@@ -22,11 +22,11 @@ with open('words_ordered.csv', 'w') as new_f:
     for line in lipu_pona:
         # print(line)
         if ',' in line:
-            line.replace(',', '/')
-            if line[0] in 'aeioumnptkswlj':
-                new_f.write(line + ',')
+            a = line.replace(',', '/')
+            if a[0] in 'aeioumnptkswlj':
+                new_f.write(a + ',')
             else:
-                new_f.write(line + '\n')
+                new_f.write(a + '\n')
         else:
             if line[0] in 'aeioumnptkswlj':
                 new_f.write(line + ',')
