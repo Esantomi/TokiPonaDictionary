@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['toki_pona_dict.py'],
-             pathex=['/home/esantomi/mygit/TokiPonaDictionary'],
+             pathex=['C:\\Users\\지해찬더미\\TokiPonaDictionary'],
              binaries=[],
              datas=[],
              hiddenimports=[],
