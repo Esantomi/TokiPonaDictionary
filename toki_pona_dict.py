@@ -23,18 +23,15 @@ class TokiPonaDictionary(QMainWindow, form_class) :
     def searchButtonFunction(self) :
         with open('words_ordered.csv') as csv_dict:
             reader = csv.DictReader(csv_dict)
-            # lukin = input("단어를 입력하세요 : ")
             for row in reader:
-                # print(row)
+                # print(row)  # 전체 행 출력
                 if self.lineEdit.text() == row.get('단어'):
-                    toki_anku = row.get('뜻')
-                # elif self.lineEdit.text() not in row.get('단어'):
-                #     toki_anku = "단어를 정확히 입력해 주세요."
+                    # print(row.get('단어'))  # 입력한 단어 하나만
+                    self.lineEdit.setText(row.get('뜻'))
                 else:
                     continue
-        self.lineEdit.setText(toki_anku)
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     tp_program = TokiPonaDictionary() 
     tp_program.show()

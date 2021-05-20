@@ -1,5 +1,5 @@
 # 긁어 온 파일 '단어', '뜻' 순서로 리스트에 넣기
-f = open('words.csv', 'rt', encoding = 'utf-8')
+f = open('words_raw.csv', 'rt', encoding = 'utf-8')
 
 nimi = []
 pilin = []
